@@ -1,0 +1,79 @@
+/* La Piazza — Part 3 responsive styles. Adjust variables to match Part 1 style guide. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+:root {
+  --primary: #742e2a;
+  --primary-dark: #52211e;
+  --secondary: #f4e9d8;
+  --accent: #b68b46;
+  --background: #fffdf9;
+  --surface: #ffffff;
+  --text: #29221e;
+  --muted: #605750;
+  --radius: 14px;
+  --shadow: 0 10px 28px rgba(45, 31, 25, .09);
+  --space-1: .5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--background); color: var(--text); font: 400 1rem/1.7 'DM Sans', Arial, sans-serif; }
+img, iframe { max-width: 100%; }
+img { display: block; height: auto; border-radius: var(--radius); }
+a { color: var(--primary); text-underline-offset: 3px; }
+a:hover { color: var(--primary-dark); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+h1, h2, h3 { font-family: 'Playfair Display', Georgia, serif; line-height: 1.22; }
+h1 { margin: 0; font-size: clamp(1.75rem, 4vw, 2.65rem); }
+h2 { margin: 0 0 var(--space-2); font-size: clamp(1.65rem, 3vw, 2.25rem); color: var(--primary); }
+h3 { margin: 0 0 .6rem; font-size: 1.25rem; }
+p { margin: 0 0 1rem; }
+/* Header and navigation */
+.site-header { background: var(--primary-dark); color: #fff; padding: var(--space-3) max(1rem, calc((100vw - 1120px) / 2)); position: relative; }
+.site-header > p { margin: .3rem 0 0; color: var(--secondary); }
+.site-nav { display: flex; flex-direction: column; gap: 0; max-height: 0; opacity: 0; visibility: hidden; overflow: hidden; transition: max-height .3s ease, opacity .25s ease, visibility .25s ease; }
+.site-nav.is-open { max-height: 300px; opacity: 1; visibility: visible; margin-top: 1rem; }
+.site-nav a { color: white; text-decoration: none; padding: .75rem 1rem; border-radius: 8px; font-weight: 600; }
+.site-nav a:hover, .site-nav a[aria-current='page'] { background: rgba(255,255,255,.15); }
+.menu-toggle { position: absolute; right: 1rem; top: 1.5rem; width: 46px; height: 46px; padding: 12px 10px; border: 1px solid rgba(255,255,255,.6); border-radius: 8px; background: transparent; cursor: pointer; display: flex; flex-direction: column; justify-content: space-around; }
+.menu-toggle span { display: block; height: 2px; width: 100%; background: #fff; transition: transform .25s ease, opacity .2s ease; }
+.menu-toggle[aria-expanded='true'] span:first-child { transform: translateY(7px) rotate(45deg); }
+.menu-toggle[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+.menu-toggle[aria-expanded='true'] span:last-child { transform: translateY(-7px) rotate(-45deg); }
+/* Content and cards */
+main { width: min(100% - 2rem, 1120px); margin: var(--space-5) auto; }
+main > section { margin-bottom: var(--space-5); }
+main > section:not(:first-child) { padding-top: var(--space-4); border-top: 1px solid #eaded1; }
+main > section > img { display: inline-block; width: min(100%, 320px); height: 220px; object-fit: cover; margin: 0 1rem 1rem 0; vertical-align: top; }
+main > img { display: inline-block; width: min(100%, 320px); height: 220px; object-fit: cover; margin: 0 1rem 1rem 0; vertical-align: top; }
+section > article { background: var(--surface); border: 1px solid #eee4db; border-radius: var(--radius); box-shadow: var(--shadow); padding: var(--space-3); margin: 0 0 var(--space-2); }
+section > article p:last-child { margin-bottom: 0; }
+/* Calls to action: add .button / .button-secondary to relevant anchors */
+.button, .button-secondary { display: inline-flex; justify-content: center; align-items: center; min-height: 46px; padding: .7rem 1.3rem; margin: .25rem .5rem .25rem 0; border-radius: 8px; font-weight: 700; text-decoration: none; transition: transform .15s ease, background .15s ease; }
+.button { color: #fff; background: var(--primary); }
+.button:hover { color: #fff; background: var(--primary-dark); transform: translateY(-2px); }
+.button-secondary { color: var(--primary); background: var(--secondary); border: 1px solid var(--primary); }
+.button-secondary:hover { background: #e9d6bd; transform: translateY(-2px); }
+address { font-style: normal; }
+iframe { display: block; width: 100%; max-width: 700px; border: 0; border-radius: var(--radius); }
+.site-footer { padding: var(--space-4) 1rem; text-align: center; color: #fff; background: var(--primary-dark); }
+.site-footer p { margin: .1rem 0; }
+/* Tablet: room for two-column cards */
+@media (min-width: 768px) {
+  .site-header { padding-top: var(--space-4); padding-bottom: var(--space-4); }
+  .menu-toggle { display: none; }
+  .site-nav, .site-nav.is-open { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: .35rem; max-height: none; opacity: 1; visibility: visible; overflow: visible; margin-top: var(--space-2); }
+  main section:has(> article) { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--space-2); align-items: start; }
+  main section:has(> article) > h2, main section:has(> article) > img, main section:has(> article) > p { grid-column: 1 / -1; }
+  section > article { margin: 0; }
+}
+/* Desktop: three-column menu and feature cards */
+@media (min-width: 1025px) {
+  main section:has(> article) { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .site-header { display: grid; grid-template-columns: 1fr auto; align-items: center; }
+  .site-header > p { grid-column: 1; }
+  .site-nav, .site-nav.is-open { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }
